@@ -40,6 +40,7 @@ export const updateTodo = async (req, res) => {
       return res.status(404).json({ message: "Todo Not Found" });
 
     allTodos[index].completed = !allTodos[index].completed;
+
     return res.status(200).json(allTodos[index]);
   } catch (error) {
     console.log(error);
@@ -55,11 +56,9 @@ export const deleteTodo = async (req, res) => {
     if (index === -1)
       return res.status(404).json({ message: "Todo Not Found" });
 
-    const deleted = allTodos.splice(index, 1);
-    console.log(deleted);
-    return res
-      .status(200)
-      .json({ message: "Deleted Successfully", deleted: deleted[0] });
+    allTodos.splice(index, 1);
+
+    return res.status(200).json({ message: "Deleted Successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server Error" });

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FaThumbsUp } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
-import { deleteTodo } from "../services/todoService";
+import { deleteTodo, updateTodo } from "../services/todoService";
 
 const ToDoItem = ({ todoItem }) => {
   const [checked, setChecked] = useState(todoItem.completed);
@@ -14,9 +14,8 @@ const ToDoItem = ({ todoItem }) => {
 
   const handleDeleted = async () => {
     const res = await deleteTodo(todoItem.id);
-    console.log(res);
-    // setIsDeleted(true);
-    // enqueueSnackbar(res.message, { variant: "error" });
+    setIsDeleted(true);
+    enqueueSnackbar(res.message, { variant: "error" });
   };
 
   return (
@@ -34,15 +33,13 @@ const ToDoItem = ({ todoItem }) => {
             className="w-10 h-5 cursor-pointer accent-purple-600 max-sm:w-3"
             whileHover={{ scale: 1.18 }}
             checked={checked}
-            onChange={() => {
-              !checked
-                ? enqueueSnackbar("Done 😄", {
-                    variant: "success",
-                  })
-                : enqueueSnackbar("Not Done 🥺", {
-                    variant: "error",
-                  });
-              setChecked(!checked);
+            onChange={async () => {
+              const newStatus = !checked;
+              await updateTodo(todoItem.id);
+              setChecked(newStatus);
+              newStatus
+                ? enqueueSnackbar("Done 😄", { variant: "success" })
+                : enqueueSnackbar("Not Done 🥺", { variant: "error" });
             }}
           />
         )}
@@ -65,11 +62,13 @@ const ToDoItem = ({ todoItem }) => {
           </motion.p>
         )}
       </div>
-      <motion.div className="flex items-center gap-2 justify-center">
-        <button onClick={() => handleDeleted()}>
-          <MdDelete className="text-4xl text-red-500 cursor-pointer hover:-translate-y-1.5 transition-all ease-out duration-150 max-md:text-2xl max-sm:text-xl" />
-        </button>
-      </motion.div>
+      {!isDeleted && (
+        <motion.div className="flex items-center gap-2 justify-center">
+          <button onClick={handleDeleted}>
+            <MdDelete className="text-4xl text-red-500 cursor-pointer hover:-translate-y-1.5 transition-all ease-out duration-150 max-md:text-2xl max-sm:text-xl" />
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 };

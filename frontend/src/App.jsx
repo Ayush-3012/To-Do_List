@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getAllTodos } from "./services/todoService";
@@ -8,15 +9,16 @@ import Footer from "./components/Footer";
 const App = () => {
   const [allTodos, setAllTodos] = useState([]);
 
+  const fetchTodos = async () => {
+    try {
+      const res = await getAllTodos();
+      res && setAllTodos(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const res = await getAllTodos();
-        res && setAllTodos(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchTodos();
   }, []);
   return (
@@ -28,7 +30,7 @@ const App = () => {
         animate={{ opacity: 1 }}
       >
         <Header />
-        <ToDoList allTodos={allTodos} />
+        <ToDoList allTodos={allTodos} refetchTodos={fetchTodos} />
         <Footer />
       </motion.div>
     </>

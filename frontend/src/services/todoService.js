@@ -6,7 +6,7 @@ export const getAllTodos = async () => {
 };
 
 export const saveTodo = async ({ title }) => {
-  const res = await axios.post(`${import.meta.env.VITE_API_URL}/add`, {
+  const res = await axios.post(`${import.meta.env.VITE_API_URL}`, {
     title,
   });
   return res.data;

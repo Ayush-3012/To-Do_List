@@ -15,6 +15,8 @@ const ToDoList = (props) => {
     const res = await saveTodo({ title: newTodo });
     enqueueSnackbar(res.message, { variant: "success" });
     setNewTodo("");
+
+    props.refetchTodos();
   };
 
   return (
@@ -56,7 +58,11 @@ const ToDoList = (props) => {
         transition={{ duration: 1, type: "spring", bounce: 0.6, delay: 0.4 }}
       >
         {props?.allTodos?.map((todoItem, index) => (
-          <ToDoItem key={index} todoItem={todoItem} />
+          <ToDoItem
+            key={index}
+            todoItem={todoItem}
+            refetchTodos={props.refetchTodos    }
+          />
         ))}
       </motion.div>
     </motion.div>
