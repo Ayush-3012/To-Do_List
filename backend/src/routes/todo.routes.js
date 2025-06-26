@@ -8,6 +8,7 @@ import {
 
 const todoRouter = Router();
 
+// routes to apply functions on the todos
 todoRouter.route("/").get(getAllTodos);
 todoRouter.route("/").post(saveTodo);
 todoRouter.route("/:id").put(updateTodo);

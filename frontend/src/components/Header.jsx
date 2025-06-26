@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <motion.div
-      className="text-xl bg-gradient-to-tl from-rose-300 via-20% to-rose-400 self-stretch mx-10 font-mono font-bold text-slate-950 py-4 rounded-md text-center"
+      className="text-xl bg-gradient-to-tl from-rose-300 via-50% to-rose-500 self-stretch mx-10 font-mono font-bold text-slate-950 py-4 rounded-md text-center"
       initial={{ opacity: 0, y: 1000 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}

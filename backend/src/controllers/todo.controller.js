@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-let allTodos = [];
+let allTodos = []; // Global array to store all todos
 
 export const getAllTodos = async (req, res) => {
   try {
-    return res.status(200).json(allTodos);
+    return res.status(200).json(allTodos); // Returning all stored todos
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server Error" });
@@ -21,7 +21,7 @@ export const saveTodo = async (req, res) => {
       completed: false,
     };
 
-    allTodos.push(newTodo);
+    allTodos.push(newTodo); // Adding the new todo
 
     return res
       .status(201)
@@ -39,7 +39,7 @@ export const updateTodo = async (req, res) => {
     if (index === -1)
       return res.status(404).json({ message: "Todo Not Found" });
 
-    allTodos[index].completed = !allTodos[index].completed;
+    allTodos[index].completed = !allTodos[index].completed; // updating the completed status of found todo
 
     return res.status(200).json(allTodos[index]);
   } catch (error) {
@@ -56,7 +56,7 @@ export const deleteTodo = async (req, res) => {
     if (index === -1)
       return res.status(404).json({ message: "Todo Not Found" });
 
-    allTodos.splice(index, 1);
+    allTodos.splice(index, 1); // deleting the found todo
 
     return res.status(200).json({ message: "Deleted Successfully" });
   } catch (error) {
